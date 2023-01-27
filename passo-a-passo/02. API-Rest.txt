@@ -1,0 +1,31 @@
+/*** BACK-END ***/
+Neste trecho, construiremos o backend. Retratarei o procedimento de uma
+das nossas tabelas (carros), mas esses passos podem ser seguidos nas tabelas posteriores também.
+
+---
+
+1. Criar banco de dados e setá-lo no .env
+
+2. 'php artisan make:model Carro -m'
+- Dessa forma, criamos a model e automaticamente a migration. 
+- Não devemos nos esquecer de aplicar o $fillable = ['>propriedades<']; na model
+- Na model, colocamos funcionalidades para tratar quaisquer dados vindos do banco, ou relatar os relacionamentos
+- Após isso, devemos especificar os campos na migration e depois rodar o 'php artisan migrate';
+
+---
+
+/ * Agora, já possuindo os dados no banco (use seeders para popular, caso prefira), vamos criar o controller e o
+form request. O controller servirá para processar e servir as requisições da aplicação e o request será um validador */
+dos campos passados.
+
+---
+
+3. Criando controller - php artisan make:controller api/Carros --api
+Esse comando será útil para criar um controlador já com o modelo de API; Sinta-se à vontade para conferir
+no arquivo app\Http\Controllers\api\CarrosController.php como as requisições são feitas. Lembrando
+que no arquivo routes\api.php devemos adicionar a linha 'Route::resource('carros', Carros::class);'.
+
+4. Criando form request - php artisan make:request CarrosRequest
+Neste request, podemos validar os campos (como required, nullable, tipos de dados),
+dessa forma economizando linhas de código no nosso controller. Para entender melhor sobre essas validações,
+confira o arquivo: app\Http\Requests\CarrosRequest.php

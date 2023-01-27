@@ -1,0 +1,54 @@
+/** POPOULANDO TABELA COM VUE JS **/
+
+* Nesta parte da documentação, iremos documentar a população de uma das tabelas (carro) com VUE.js. 
+* Os passos podem ser seguidos e adaptados para as outras tabelas.
+
+1. Axios Install
+Devemos instalar, apontando para a pasta do projeto (via terminal), o Axios. O Axios é a
+ferramenta que utilizaremos para consumir API rest. Insira o comand:
+> npm install axios --save
+
+--------------------------------------------------------------------------------------------
+
+2. Services
+* Criamos a pasta 'services' em resources > js;
+* Dentro de services (pasta recém-criada), iniciamos outros 2 arquivos -> config.js e {arquivorelacionado-a-api}.js;
+* O conteúdo de resources > js > services > config.js deve ser:
+ import axios from 'axios'
+ export const http = axios.create({
+ baseURL: 'http://127.0.0.1:8000/api' /* AQUI É COLOCADA A BASE DA ROTA DA API */
+ })
+
+--------------------------------------------------------------------------------------------
+
+3. resources > js > services > produtos.js
+Tenha conhecimento de que o termo “produto(s)” são relacionados ao nosso atual projeto. Em
+seu projeto particular, deve intitular esses dados e arquivos de acordo com seu objetivo. Veja
+nosso arquivo com métodos para a requisição, espelhe-se nisso para gerenciar seus verbos
+http:
+
+import { http } from './config.js';
+
+export default {
+
+    trazerCarros: () => {
+        return http.get('/carros')
+    },
+
+    salvarCarros: (carro) => {
+        return http.post('/carros', carro);
+    },
+
+    atualizarCarros: (carro) => {
+        return http.put(`/carros/${carro.id}`, carro);
+    },
+
+    excluirCarros: (carro) => {
+        return http.delete(`/carros/${carro.id}`, {data: carro});
+    }
+}
+
+--------------------------------------------------------------------------------------------
+
+4. A partir daqui, criamos os componentes e métodos. Pode verificar os arquivos C:\Users\User\aplicação fullstack laravue\car-spa\resources\js\pages\Carros.vue e C:\Users\User\aplicação fullstack laravue\car-spa\resources\js\components\NavBar.vue,
+eles servirão como um guia para que você implemente métodos semelhantes em sua aplicação.

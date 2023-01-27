@@ -1,0 +1,103 @@
+Passo a passo realizado na criação do projeto CAR SPA!
+
+---
+
+IMPORTANTE:
+*** Os passos 1 e 2 são comandos executados exclusivamente por linha de comando.
+
+---
+1. Instalando Laravel:
+> composer create-project laravel/laravel {app-name} "8.*"
+
+2. Instalando Vue JS (apontar para pasta do projeto):
+> composer require laravel/ui "^3.0"
+> php artisan ui vue
+> npm install --save vue@next
+> npm install --save-dev vue-loader@next
+
+3. Substituir conteúdo de /webpack.mix.js para:
+const mix = require('laravel-mix');
+mix.js('resources/js/app.js', 'public/js')
+ .vue() //..verify this!
+ .postCss('resources/css/app.css', 'public/css', [
+ //
+]);
+
+4. Incluindo componentes em resources > js > app.js. O código deste arquivo,
+considerando que seu componente .vue se chame App, será:
+    import { createApp } from 'vue';
+    import App from './App.vue';
+    import router from "./routers/router.js";
+    const app =
+    createApp(App);
+    app.use(router);
+    app.mount("#app");
+
+5. Componentes .vue
+Os componentes .vue que, basicamente, servirão como nossas views, devem ser armazenados em uma pasta gerada, sendo esta “resources > js > views > {componentes.vue}”. Esses componentes VueJs possuem uma estrutura bem simples, composta por 3 blocos: template, script e style. O template é onde inserimos o nosso HTML, Style é onde inserimos nosso CSS e Script é onde inserimos o nosso js. Podemos exportar esses arquivos através do JavaScript. Ele tem algumas peculiaridades, como a forma de criar href e a tag <routeview></route-view> (esta última, no caso, serve para exibir os componentes vue).
+
+6. Criamos o arquivo resources > js > App.vue.
+Esse arquivo serve para conter elementos que serão padronizados em todas as páginas, como um header ou footer
+
+7. Incluindo o componente na view
+Abra o arquivos resources/views/welcome.blade.php. Na tag body, vamos adicionar um elemento
+div com o id “app“, pois no arquivo resources/app.js estamos montando a aplicação Vue num
+elemento HTML cujo id é “app”. O arquivo deve ficar com a seguinte aparência:
+<body>
+ {{-- Trazendo o vue.js para a view --}}
+ <div id="app">
+ <app></app>
+ </div>
+ {{-- Importando arquivo JS --}}
+ <script src="{{ mix('js/app.js') }}"></script>
+</body>
+
+8. Vue-Router
+Para cuidar das rotas com o LaraVue, usamos o componente vue-router. Podemos instalá-lo em
+nosso projeto, aplicamos (via terminal):
+> npm install vue-router
+
+9. routes > web.php
+Neste arquivo, definimos a view padrão que receberá as rotas. Futuramente, estabeleceremos estas rotas no front-end por um arquivo JS. Já, no backend, podemos deixar algo como:
+    <?php
+
+    use Illuminate\Support\Facades\Route;
+
+    Route::get('/', function () { return view('welcome'); });
+    Route::get('/car-shop/{any}', function () { return view('welcome'); })->where('any', '.*');
+
+10. public/css/style.css
+O style.css pode ser utilizado para customizarmos o CSS das views. Também podemos
+customizar pela própria tag style dos componentes .vue – vai variar da preferência do dev e da
+necessidade do projeto.
+
+11. resources > js > routers > router.js
+O resources > js > routers > router.js deve conter uma constante com um array contendo as
+rotas, importar os componentes (no caso, as views .vue) e exportar este componente. Confira o
+código de exemplo:
+
+    import Carros from '../pages/Carros.vue';
+    import {createRouter, createWebHistory} from "vue-router";
+
+    const routes = [
+        {
+            path: '/',
+            name: 'carros',
+            component: Carros
+        },
+    ];
+
+    const router = new createRouter({
+        history: createWebHistory(),
+        routes
+    });
+
+    export default router;
+
+12. Para compilarmos o JavaScript (.vue) em tempo real podemos aplicar, através do terminal, o “npm run watch”.
+13. Após isso, podemos criar rotas e testá-las. O desenvolvimento do front-end foi feito com Materialize.css - https://materializecss.com/getting-started.html.
+
+14. Componentes Vue
+Podemos dividir o template em componentes. Verificar o arquivo resources > js > components > NavBar.vue para verificar como é criado um componente. E nos arquivos das páginas, podemos importar esses componentes e usar como <NomeDoComponente />
+
+15. Cores: Para definir melhor as paletas de cores, podemos buscar auxílio no https://colorhunt.co/

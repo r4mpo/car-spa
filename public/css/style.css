@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+
+* {
+    font-family: 'Comfortaa', cursive;    
+}
+
+.c-311b92 {
+    color: #311b92;
+}
+
+.c-green {
+    color: green;
+}
+
+.c-blue {
+    color: blue;
+}
+
+.p-10 {
+    padding: 3% 3% 3% 3%;
+}
+
+.c-red {
+    color: red;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.bg-311b92 {
+    background-color: #311b92;
+} 
+
+.bc-dd1dff {
+    border-color: #dd1dff
+}
